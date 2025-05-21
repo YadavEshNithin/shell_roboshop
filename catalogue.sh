@@ -31,14 +31,14 @@ VALIDATE(){
 }
 
 dnf module disable nodejs -y &>>$LOG_FILE
-VALIDATE $? "installing catalogue"
+VALIDATE $? "disabling catalogue"
 
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "enabling catalogue"
 
 dnf install nodejs -y &>>$LOG_FILE
-VALIDATE $? "enabling catalogue"
+VALIDATE $? "installing catalogue"
 
 id roboshop
 if [ $? -ne 0 ]
