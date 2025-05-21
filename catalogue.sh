@@ -40,23 +40,23 @@ VALIDATE $? "enabling catalogue"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "enabling catalogue"
 
-# id roboshop
-# if [ $? -ne 0 ]
-# then
-#     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-#     VALIDATE $? "user catalogue"
-# else
-#     echo "user already created"
-# fi
-
 id roboshop
 if [ $? -ne 0 ]
 then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-    VALIDATE $? "Creating roboshop system user"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    VALIDATE $? "user CREATING catalogue"
 else
-    echo -e "System user roboshop already created ... $Y SKIPPING $N"
+    echo "user already created"
 fi
+
+# id roboshop
+# if [ $? -ne 0 ]
+# then
+#     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+#     VALIDATE $? "Creating roboshop system user"
+# else
+#     echo -e "System user roboshop already created ... $Y SKIPPING $N"
+# fi
 
 
 mkdir -p /app 
