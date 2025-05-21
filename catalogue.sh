@@ -74,7 +74,10 @@ cd /app
 npm install  &>>$LOG_FILE
 VALIDATE $? "npm installed"
 
+# cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "Copying catalogue service"
 
 
 systemctl daemon-reload &>>$LOG_FILE
