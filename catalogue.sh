@@ -46,7 +46,7 @@ then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     VALIDATE $? "user CREATING catalogue"
 else
-    echo "user already created"
+    echo "user already created...$Y SKIPPING THIS STEP $N"
 fi
 
 # id roboshop
