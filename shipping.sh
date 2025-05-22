@@ -136,7 +136,8 @@ else
 fi
 
 echo "Please enter root password to setup"
-read -s MYSQL_ROOT_PASSWORD
+# read -s MYSQL_ROOT_PASSWORD
+MYSQL_ROOT_PASSWORD=RoboShop@1
 
 # validate functions takes input as exit status, what command they tried to install
 VALIDATE(){

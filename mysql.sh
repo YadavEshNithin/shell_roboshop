@@ -22,7 +22,8 @@ else
 fi
 
 echo "please enter password"
-read -s "MYSQL_ROOT_PASSWORD"
+# read -s "MYSQL_ROOT_PASSWORD"
+MYSQL_ROOT_PASSWORD=RoboShop@1
 
 VALIDATE(){
     if [ $1 -eq 0 ]
