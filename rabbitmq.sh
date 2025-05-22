@@ -1,5 +1,6 @@
 #!/bin/bash
-$START_TIME=$(date +%s)
+
+START_TIME=$(date +%s)
 USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
@@ -13,6 +14,7 @@ SCRIPT_DIR=$PWD
 mkdir -p $LOGS_FOLDER
 echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 
+# check the user has root priveleges or not
 if [ $USERID -ne 0 ]
 then
     echo -e "$R ERROR:: Please run this script with root access $N" | tee -a $LOG_FILE
@@ -21,7 +23,10 @@ else
     echo "You are running with root access" | tee -a $LOG_FILE
 fi
 
+echo "Please enter rabbitmq password to setup"
+read -s RABBITMQ_PASSWD
 
+# validate functions takes input as exit status, what command they tried to install
 VALIDATE(){
     if [ $1 -eq 0 ]
     then
@@ -32,24 +37,20 @@ VALIDATE(){
     fi
 }
 
-dnf module disable redis -y &>>$LOG_FILE
-VALIDATE $? "disabling redis"
+cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+VALIDATE $? "Adding rabbitmq repo"
 
-dnf module enable redis:7 -y &>>$LOG_FILE
-VALIDATE $? "enabling redis"
+dnf install rabbitmq-server -y &>>$LOG_FILE
+VALIDATE $? "Installing rabbitmq server"
 
+systemctl enable rabbitmq-server &>>$LOG_FILE
+VALIDATE $? "Enabling rabbitmq server"
 
-dnf install redis -y &>>$LOG_FILE 
-VALIDATE $? "installing redis"
+systemctl start rabbitmq-server &>>$LOG_FILE
+VALIDATE $? "Starting rabbitmq server"
 
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
-VALIDATE $? "changing config for redis"
-
-systemctl enable redis  &>>$LOG_FILE
-VALIDATE $? "enabling redis"
-
-systemctl start redis  &>>$LOG_FILE
-VALIDATE $? "starting redis service"
+rabbitmqctl add_user roboshop $RABBITMQ_PASSWD &>>$LOG_FILE
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
 
 END_TIME=$(date +%s)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))

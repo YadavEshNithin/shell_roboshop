@@ -1,3 +1,4 @@
+#!/bin/bash
 $START_TIME=$(date +%s)
 USERID=$(id -u)
 R="\e[31m"
