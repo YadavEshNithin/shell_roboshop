@@ -49,15 +49,6 @@ else
     echo -e "user already created...$Y SKIPPING THIS STEP $N"
 fi
 
-# id roboshop
-# if [ $? -ne 0 ]
-# then
-#     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-#     VALIDATE $? "Creating roboshop system user"
-# else
-#     echo -e "System user roboshop already created ... $Y SKIPPING $N"
-# fi
-
 
 mkdir -p /app 
 
