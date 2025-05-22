@@ -22,7 +22,6 @@ else
 fi
 
 echo "please enter password"
-# read -s "MYSQL_ROOT_PASSWORD"
 MYSQL_ROOT_PASSWORD=RoboShop@1
 
 VALIDATE(){
@@ -45,7 +44,7 @@ VALIDATE $? "starting mysql"
 
 
 
-mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD &>>$LOG_FILE
+mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOG_FILE
 VALIDATE $? "Setting MySQL root password"
 
 
